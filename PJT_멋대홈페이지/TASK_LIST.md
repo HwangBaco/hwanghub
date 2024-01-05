@@ -10,6 +10,7 @@
 - [x] 날짜형식 파싱해서 리턴 YYYY. (M)M. (D)D
 - [x] 댓글별 로그인 유저가 좋아요를 눌렀는지 boolean 보내기 -> response 필드 추가
 - [x] 로그인유저 댓글좋아요여부 boolean 필드 추가
+- [ ] commentLike count 조회시에도 redis 사용하기? (이걸 하고싶으면 지금처럼 DB 중심으로 redis 를 업데이트 하는게 아니라, scheduler 방식으로 업데이트 하는게 필요할듯함)
 
 ### 트러블슈팅
 - [x] 좋아요/댓글 생성 API 멱등성 구현
@@ -20,8 +21,12 @@
 - [x] 카테고리 이름들 한글로 request될 수 있게 수정
 - [x] 에러 잡기(PR날림 -> comment+post 조회 로직이 문제였고, 기존 코드를 변경하면서 문제가 생김; 기존 로직까지 매번 손으로 테스트하는게 점점 상당히 불편해짐, 테스트의 중요성을 느끼게 되는 계기)
 - [x] 로직 수정에 따른 스키마 변경 -> DB 접속해서 postlike 에 createdDate, modifiedDate 칼럼 추가 SQL 실행하기
-- [ ] commentCount 로직 체크 (post 조회 부분)
+- [x] commentCount 로직 체크 (post 조회 부분)
+- [x] 삭제된 댓글 두번 삭제 못하게 수정
+- [x] redis commentCount 새로 set 할 때 count 쿼리에서 isDeleted = false인 것만 하도록 수정
+- [ ] 삭제된 댓글에 대댓글 못달게 수정 (보류)
 - [ ] servicedto 내부에서 controllerdto 등으로 변환하는 객체지향적 로직 구성
+
 
 ### 최적화
 - [x] 게시글목록 api 최적화 : 커버링인덱스 적용
