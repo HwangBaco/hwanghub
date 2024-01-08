@@ -10,7 +10,10 @@
 - [x] 날짜형식 파싱해서 리턴 YYYY. (M)M. (D)D
 - [x] 댓글별 로그인 유저가 좋아요를 눌렀는지 boolean 보내기 -> response 필드 추가
 - [x] 로그인유저 댓글좋아요여부 boolean 필드 추가
-- [ ] commentLike count 조회시에도 redis 사용하기? (이걸 하고싶으면 지금처럼 DB 중심으로 redis 를 업데이트 하는게 아니라, scheduler 방식으로 업데이트 하는게 필요할듯함)
+- [ ] 게시글 수정 시 category도 수정할 수 있게 수정
+
+-- 보류
+- [ ] commentLike count 조회시에도 redis 사용하기
 
 ### 트러블슈팅
 - [x] 좋아요/댓글 생성 API 멱등성 구현
@@ -24,7 +27,10 @@
 - [x] commentCount 로직 체크 (post 조회 부분)
 - [x] 삭제된 댓글 두번 삭제 못하게 수정
 - [x] redis commentCount 새로 set 할 때 count 쿼리에서 isDeleted = false인 것만 하도록 수정
-- [ ] 삭제된 댓글에 대댓글 못달게 수정 (보류)
+- [ ] 레디스 캐시 갱신될 때, isDeleted = false인 entity만 세도록 수정
+
+-- 보류
+- [ ] 삭제된 댓글에 대댓글 못달게 수정 (기획 대기)
 - [ ] servicedto 내부에서 controllerdto 등으로 변환하는 객체지향적 로직 구성
 
 
@@ -33,12 +39,14 @@
 - [x] 게시글목록 api 최적화 : 레디스캐싱~좋아요/댓글수
 - [x] postdetail 조회 api에 redis 적용 (count들)
 - [x] business / presentation dto 분리
+- [ ] 테스트 커버리지 100% 구축 (커뮤니티 100%)
+- [ ] PR 피드백 반영 (리팩토링, 성능 개선)
+
+-- 보류
 - [ ] 양방향 연관관계 편의메서드 설정시 발생하는 사이드이펙트(N+1가 발생한다던데 진짜인지) 확인~최적화 진행 : post <-> comment, postlike
 - [ ] querydsl 쿼리 최적화 점검 (조회 api 전부)
 ref) https://youtu.be/zMAX7g6rO_Y?si=dv4L-vgHb61JRxuN
 - [ ] 게시글 본문슬라이싱 로직 수정(현재 비효율적)
-- [ ] 테스트 커버리지 100% 구축 (커뮤니티 100%)
-- [ ] PR 피드백 반영 (리팩토링, 성능 개선)
 - [ ] 서비스 모니터링 환경 구축(grafana, prometheus)
 
 - [ ] 기록하기
