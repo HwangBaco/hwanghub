@@ -27,7 +27,7 @@
 - [x] commentCount 로직 체크 (post 조회 부분)
 - [x] 삭제된 댓글 두번 삭제 못하게 수정
 - [x] redis commentCount 새로 set 할 때 count 쿼리에서 isDeleted = false인 것만 하도록 수정
-- [ ] 레디스 캐시 갱신될 때, isDeleted = false인 entity만 세도록 수정
+- [x] 레디스 캐시 갱신될 때, isDeleted = false인 entity만 세도록 수정
 
 -- 보류
 - [ ] 삭제된 댓글에 대댓글 못달게 수정 (기획 대기)
