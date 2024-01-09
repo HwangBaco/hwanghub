@@ -7,10 +7,10 @@
 - [x] 게시글 목록 조회 main/sub category 필드 추가
 - [x] 게시글 상세에서 main/sub category 필드 추가
 - [x] 게시글 상세 response dto -> created date 필드 추가
-- [x] 날짜형식 파싱해서 리턴 YYYY. (M)M. (D)D
+- [x] 게시글 responsedto 날짜형식 -> YYYY. (M)M. (D)D폼으로 파싱해서 리턴
 - [x] 댓글별 로그인 유저가 좋아요를 눌렀는지 boolean 보내기 -> response 필드 추가
 - [x] 로그인유저 댓글좋아요여부 boolean 필드 추가
-- [ ] 게시글 수정 시 category도 수정할 수 있게 수정
+- [x] 게시글 수정 시 category도 수정할 수 있게 수정
 
 -- 보류
 - [ ] commentLike count 조회시에도 redis 사용하기
@@ -28,6 +28,7 @@
 - [x] 삭제된 댓글 두번 삭제 못하게 수정
 - [x] redis commentCount 새로 set 할 때 count 쿼리에서 isDeleted = false인 것만 하도록 수정
 - [x] 레디스 캐시 갱신될 때, isDeleted = false인 entity만 세도록 수정
+- [x] 게시글 목록 조회시 body summary에 img 태그 노출되는 것 제거
 
 -- 보류
 - [ ] 삭제된 댓글에 대댓글 못달게 수정 (기획 대기)
