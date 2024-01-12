@@ -24,7 +24,7 @@ public PostSimpleData(...) {
 
 예를 들면 이런 식이다.
 ```html
-<p>썸넬 전 내용</p><p><img src="https://storage.likelionuniv.com/thumbnail.jpg"></p><p>썸넬 후 내용</p><p><img src="https://storage.blahblah.com/image2.jpg"></p>
+<p>썸넬 전 내용</p><p><img src="https://store.blahblah.com/thumbnail.jpg"></p><p>썸넬 후 내용</p><p><img src="https://store.blahblah.com/image2.jpg"></p>
 ```
 위 내용에 있는 내용 중 img 태그에 대한 내용을 지워줘야 한다.
 

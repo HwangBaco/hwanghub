@@ -11,6 +11,8 @@
 - [x] 댓글별 로그인 유저가 좋아요를 눌렀는지 boolean 보내기 -> response 필드 추가
 - [x] 로그인유저 댓글좋아요여부 boolean 필드 추가
 - [x] 게시글 수정 시 category도 수정할 수 있게 수정
+- [x] 검색 시 "전체 게시판"으로 카테고리 범위 설정 수정
+- [ ] 게시글 검색에도 기본 3가지 정렬(좋아요 순 등) 추가 반영
 
 -- 보류
 - [ ] commentLike count 조회시에도 redis 사용하기
@@ -29,6 +31,7 @@
 - [x] redis commentCount 새로 set 할 때 count 쿼리에서 isDeleted = false인 것만 하도록 수정
 - [x] 레디스 캐시 갱신될 때, isDeleted = false인 entity만 세도록 수정
 - [x] 게시글 목록 조회시 body summary에 img 태그 노출되는 것 제거
+- [ ] 연속으로 api가 호출되면 한번만 되게
 
 -- 보류
 - [ ] 삭제된 댓글에 대댓글 못달게 수정 (기획 대기)
@@ -40,6 +43,7 @@
 - [x] 게시글목록 api 최적화 : 레디스캐싱~좋아요/댓글수
 - [x] postdetail 조회 api에 redis 적용 (count들)
 - [x] business / presentation dto 분리
+- [ ] 커버링 인덱스 테스트하고 제대로 적용하기
 - [ ] 테스트 커버리지 100% 구축 (커뮤니티 100%)
 - [ ] PR 피드백 반영 (리팩토링, 성능 개선)
 
