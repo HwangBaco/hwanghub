@@ -109,10 +109,10 @@ public class TCPServer {
                     String clientIp = isa.getHostName();  
                     System.out.println("server : clientIP " + clientIp + " connected");  
                     // get data from client  
-                    byte[] readBytes = new byte[1024];  
+                    byte[] buffer = new byte[1024];  
                     InputStream inputStream = socket.getInputStream();  
-                    int input = inputStream.read(readBytes);  
-                    String data = new String(readBytes, 0, input, "UTF-8");  
+                    int input = inputStream.read(buffer);  
+                    String data = new String(buffer, 0, input, "UTF-8");  
                     System.out.println("server : read data -> " + data);  
   
                     // send echo data to client  
@@ -160,11 +160,11 @@ public class TCPClient {
   
             // send data  
             String data = "자바로 네트워크 이해하기!!!";  
-            byte[] bytes = data.getBytes("UTF-8");  
+            byte[] buffer = data.getBytes("UTF-8");  
             OutputStream outputStream = socket.getOutputStream();  
-            outputStream.write(bytes);  
+            outputStream.write(buffer);  
             outputStream.flush();  
-            System.out.println("client : send data -> " + data);  
+            System.out.println("client : send data -> " + buffer);  
   
             // receive echo  
             DataInputStream dataInputStream = new DataInputStream(socket.getInputStream());  
