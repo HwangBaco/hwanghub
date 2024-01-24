@@ -63,6 +63,8 @@ class Person implements Serializable {
 
 Person이라는 클래스 인스턴스를 직렬화하여 바탕화면에 저장한 뒤 다시 코드로 불러와서 객체 정보를 출력해 보겠습니다. 직렬화 / 역직렬화는 `implements Serializable`를 해줌으로써 자동으로 처리됩니다.
 
+(아래에서는 절대 경로를 사용했는데, 사실 이는 협업 과정을 고려했을 때에는 권장하는 방식은 아닙니다. 그냥 직관적으로 이해하기 위함이니 넘어가주시길 바랍니다. :)
+
 ```java
 public class SerializationTest {  
     private static void write(Person person, File file) {  
