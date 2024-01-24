@@ -1,38 +1,40 @@
 
 ## 자바로 자료구조 시작하기
 
-원시 자료형을 이용한 배열만 있던 자바1 이전. 다이나믹한 크기나 삽입/삭제 등을 편리하게 추가하기 위해 자바에서는 컬렉션 프레임워크를 제공한다.
+자바는 자료의 관리를 용이하게 하는 많은 자료구조를 인터페이스와 구현 클래스를 정의하여 java.util 패키지에 모아두었고, 이를 컬렉션 프레임워크라고 부른다.
 
-기본적으로 List, Set, Queue 인터페이스가 Collection 인터페이스를 확장하여 정의되어 있고, Map은 별도로 정의되어 있다.
+## 컬렉션 프레임워크의 구조
 
-### List
-아마도 가장 자주 접하게 되는 인터페이스로, 순서대로 element를 모아두는 모음집이다. 배열과 유사한 형대로 제공되었던 게 초창기에는 vector, 그리고 오늘날에는 arrayList가 있다. 아울러 나열 방식으로 구현되는 게 아니라 각 노드끼리 연결된 자료구조 형태로 구현된 linkedList가 있다.
-- arraylist : 우리가 아는 배열을 `동적 배열`로 구현한 자료형이다.(7장 참고)
-- linkedlist : `연결 리스트`로 구현된 자료구조이며, 자바에서는 기본적으로 double linked list로 구현되어있다. (8장 참고)
-- vector : 존재하긴 하나, 자바에서는 arraylist로 대체된 자료구조라고 이해하면 된다. 사용할 순 있지만, 사용하지 말자. 안된다. (초기 자료형의 성능 문제 존재)
+인터페이스를 통해 자바의 컬렉션 프레임워크가 어떤 구조를 갖고 있는지 이해해보자.
 
-### Set
-중복을 허용하지 않는 List라고 이해하면 편하다.
+![](https://miro.medium.com/v2/resize:fit:822/1*qgcrVwo8qzF4muOQ-kKB8A.jpeg)
 
-### Queue
-큐 자료구조 인터페이스(9장에서 설명)
-- deque : 스택과 큐의 특징을 모두 갖는 양방향 큐이다. Queue 인터페이스를 확장하여 정의하고 있다. (10장에서 설명)
+위 그림에서 초록색을 기준으로 보면 구조를 이해할 수 있다. 자바는 Iterable이라는 최상위 인터페이스를 기반으로 `List`, `Set`, `Queue` 컬렉션을 운영하고 있고, 번외로 `Map`이라는 게 존재한다.
 
-### Map
-Collection을 확장하지 않고 별도로 구현되어 있다. 아무래도 Collection을 확장한 List, Set, Queue 등은 모두 '값'으로만 구성된 자료형이지만, map은 key-value 형태로 묶기 때문인 걸로 보인다. 별도로 정의된 만큼 메서드 명칭도 살짝 다르다.
+## 컬렉션 인터페이스 둘러보기
 
-- hashmap : 가장 기본적인 해시 테이블 자료형이다. 입력 순서를 보장하지 않는 점을 주의해야 하며, 순서에 관여하지 않는 것은 원래 hash table이라는 자료구조가 갖는 특징이기도 하다.
-- linkedhashmap : 입력 순서를 유지하는 해시 테이블 자료형이다.
-- treemap : 값에 따라 순서를 정렬하는 해시 테이블 자료형이다. 내부적으로는 self-balanced binary search tree인 red-black tree로 구현되어 있다.(14장 참고) 정렬 순서도 임의로 지정할 수 있다.
-- hashtable : 이 또한 vector와 마찬가지로, 자바 초기에 추가된 자료형이지만, 현재는 성능 문제로 사용하지 않는다. (그럼에도 지원하는 이유는, 자바는 자바로 짜여진 기존 프로그램들이 모두 정상적으로 수행될 수 있도록 이전 버전과의 호환성을 매우 철저하게 지원하기 때문이다.)
+자바를 잘 이해하고 있는 사람은 알겠지만, `List`, `Set`, `Queue`와 같은 인터페이스는 모두 `Collection`이라는 인터페이스를 상속하고 있기 때문에 기본적인 동작 메서드는 대부분 동일하게 지원한다. `add()`, `get()` 또는 `contains()`, `isEmpty()`, `remove()` 와 같은 메서드들이 지원되며, 이를 통해 자바를 사용하는 사람들이 각 컬렉션별로 번거로이 구별하여 학습하지 않아도 편하게 재사용이 가능하다. (인터페이스의 힘) 물론, 각 자료구조별로 `add()` 또는 `remove()`와 동일한 기능을 수행하더라도 자료구조에 따라 다른 이름의 메서드로도 지원된다. 그러면, 각 컬렉션 인터페이스를 가볍게 이해해보자.
 
+- List : 순서대로 element를 모아두는 컬렉션이다.(선형 자료구조) 구현체는 동적 배열인 ArrayList, 기본적으로 양방향 연결리스트인 LinkedList, 그리고 오늘날에는 사용하지 않는 동적 배열 Vector와 벡터를 이용하여 구현했던 Stack이 같이 있다. 
+	
+	*** (자바의 Vector와 Stack은 CPU 코어가 1개였을 시절에 만든 자료구조로, 상당히 연산 효율이 비효율적인 구현체이다. 오늘날에는 Concurrent- 류의 동시성 제어를 구현한 자료구조도 많이 제공하고 있고, Vector와 Stack 모두 ArrayList와 LinkedList로 대체가 가능하니 사용할 이유가 전혀 없다.)
+	
+- Set : 기본적으로는 입력되는 element의 순서를 유지하지 않으며, 포함 여부를 판단할 때 주로 사용하는 컬렉션이다. 중복을 허용하지 않는다는 것이 가장 큰 특징이라, 실제로 알고리즘에 사용할 때에는 element의 중복을 제거할 때 많이 사용한다.
 
----
+- Queue : 선입선출 구조를 갖는 선형 자료구조이다. Queue 인터페이스는 내부적으로 Deque 인터페이스가 상속하고 있고, 이를 LinkedList 클래스에서 구현하고 있으므로 자바에서는 다형성을 이용하여 다음과 같은 방식으로 사용이 가능하다.
+	`Queue<E> q = new LinkedList<>(); // 물론 ArrayDeque라는 구현체도 가능`
+
+- Map : Collection 인터페이스를 확장하지 않고 별도로 구현되어 있다. 그 이유는 Map은 다른 컬렉션들처럼 `<element>`끼리 모아두는 방식이 아니라, `<key, value>` 형식으로 데이터를 모아두기 때문이다. 인터페이스가 다르므로 지원 메서드 이름도 조금씩 다르기도 하다. `put()`, `containsKey()` 와 같은 방식으로 구성된다.
+
+	*** Map 인터페이스에서도 HashTable이라는 클래스가 존재한다. 이것도 위에서 서술한 것 처럼 자바 초창기에 CPU 1코어를 기준으로 구현된 클래스라서 사용을 지양해야 한다. 이런 것들이 오늘날에는 사용하기에 적합하지 않음에도 남아있는 이유는 자바가 하위호환성을 철칙처럼 지키고 있는 언어이기 때문이다. 전 세계적으로 자바를 이용하여 많은 서비스가 구성되어 있는데, 엔터프라이즈 서비스들은 코드가 쉽게 변하기 어렵기 때문에 어느 곳에서는 이런 코드를 사용하고 있을 것을 고려하여 jdk 버전이 업그레이드 되더라도 하위호환성을 꼭 지켜주고 있을 뿐이다. (=즉, 오늘날 새로 코드를 작성하는 입장에서는 HashTable와 같은 걸 쓸 이유가 전혀 없다.)
+
+## List : 선형 자료구조
 
 자료구조는 크게 다음과 같이 분류된다.
 - 메모리 공간 기반의 "연속" 방식
 - 포인터 기반의 "연결" 방식
 
+List를 이해하기 전에, 태초에 선형 자료구조로 사용하던 정적 배열에 대하여 먼저 알아보자.
 ## (정적) 배열(Static Array)
 ![](https://miro.medium.com/v2/resize:fit:768/0*TDrt1RUnaAF2JRD8.jpg)
 
@@ -125,7 +127,10 @@ public class LinkedList<E> extends AbstractSequentialList<E> implements List<E>,
 ### 삽입/삭제
 하지만 특정 데이터를 단순히 삽입/삭제하는 작업은 근처 포인터를 이용하여 바로 작업할 수 있으므로 O(1)의 시간이 소요된다. 물론, 중간에 삽입/삭제하기 위해서는 해당 노드를 탐색하는 시간이 O(n)만큼 필요하다.
 
-## 큐(Queue)
+## 큐(Queue) : 특징을 갖는 선형 자료구조
+
+그러면 이제부터는, element를 순서대로 단순 저장하는 방식이 아니라, 순서를 의미있게 사용하는 선형 자료구조를 이해해보자.
+
 ![](https://i.makeagif.com/media/8-18-2017/HqZ7Oy.gif)
 큐는 선입선출(FIFO; First In First Out) 방식으로 처리되는 자료구조이다. 이는 기본적인 Queue 뿐만 아니라 양방향 큐인 Deque 그리고 Priority Queue까지 다양한 variation이 있으며, 모두 자주 사용되는 데이터 타입이다.
 
@@ -142,7 +147,9 @@ public class LinkedList<E> extends AbstractSequentialList<E> implements List<E>,
 - isEmpty : 위와 마찬가지이다.
 
 ### 구현
-자바에서는 Queue 인터페이스에서 `offer()`, `poll()`, `peek()`과 같은 메서드를 정의하고 있고, 이를 LinkedList에서 구현하고 있다. ArrayDeque에서도 구현되어 있다. 하지만 편의상 LinkedList가 ArrayDeque보다 상위 클래스라서 LinkedList를 통상 사용하여 Queue를 구현한다.
+자바에서는 Queue 인터페이스에서 `offer()`, `poll()`, `peek()`과 같은 메서드를 정의하고 있고, 이를 **LinkedList에서 구현하고 있다. ArrayDeque에서도 구현되어 있다.** 그렇다면, 뭘 사용해야 할까?
+
+LinkedList는 연결 리스트로 구현되어 있어서 중간 삽입/삭제에 유리한 성능을 보이지만, Queue의 구조를 이해해보면 끝에 추가하고 앞에서 빼내고 하는 방식이 주를 이루기 때문에 내부적으로 배열 방식으로 구현되어 있는 **ArrayDeque 클래스를 이용하여 사용하는 것을 추천**한다. (특징을 고려할 때, Queue를 사용하기에 성능상 더욱 이점이 있는 구현체가 ArrayDeque인 것임)
 ```java
 import java.util.LinkedList;
 import java.util.Queue;
@@ -150,7 +157,7 @@ import java.util.Queue;
 public class QueueExample {
     public static void main(String[] args) {
         // 큐 생성
-        Queue<String> queue = new LinkedList<>();
+        Queue<String> queue = new ArrayDeque<>();
 
         // 큐에 요소 추가
         queue.add("element1"); // offer()와 동일
@@ -178,7 +185,91 @@ public class QueueExample {
 ### 활용
 큐가 가장 대표적으로 사용되는 알고리즘은 ==BFS==이다. 그 외에도 프린터 대기열, 프로세스 스케줄링, 네트워크 패킷 트래픽 관리 등에 사용된다. 또한 캐시 알고리즘 중 LRU(Least-Recently Used) 알고리즘에서도 큐를 이용하여 캐시 데이터를 관리하며, LFU(Least-Frequently Used) 알고리즘 또한 우선순위 큐를 이용하여 구현할 수 있다.
 
+## 덱(Deque)
+Deque(Double Ended Queue)는 이름에서 알 수 있듯이 양쪽 끝에서 삽입과 삭제가 모두 가능한 자료구조이다. 이로 인해 Stack과 Queue의 특성을 모두 가지고 있다. 따라서 위에서 Stack의 구현체로 ArrayDeque를 사용하는 걸 볼 수 있었다.
+
+### 조회
+- **peekFirst()**: Deque의 앞쪽 요소를 조회하는 연산으로, 시간 복잡도는 O(1)이다.
+- **peekLast()**: Deque의 뒷쪽 요소를 조회하는 연산으로, 시간 복잡도는 O(1)이다.
+
+### 삽입/삭제
+- **addFirst(element)**: Deque의 앞쪽에 요소를 삽입하며, 시간 복잡도는 O(1)이다.
+- **addLast(element)**: Deque의 뒷쪽에 요소를 삽입하며, 시간 복잡도는 O(1)이다.
+- **removeFirst()**: Deque의 앞쪽 요소를 제거하고 return한다. 시간 복잡도는 O(1)이다.
+- **removeLast()**: Deque의 뒷쪽 요소를 제거하고 return한다. 시간 복잡도는 O(1)이다.
+
+### 구현
+자바에서는 덱을 연결리스트로 구현해 두었다. Queue의 구현체가 연결리스트인데, Deque는 Queue를 상속하고 있는 구조라서 이는 자명하다고 할 수 있다. 물론 ArrayDeque를 사용해도 된다. 일단 예시에서는 LinkedList로 하겠다.
+
+```java
+Deque<String> deque = new LinkedList<>();  
+  
+// 요소를 앞쪽에 추가  
+deque.addFirst("element1");  
+deque.addFirst("element2");  
+  
+// 요소를 뒷쪽에 추가  
+deque.addLast("element3");  
+deque.addLast("element4");  
+  
+System.out.println("Initial Deque: " + deque); // Initial Deque: [element2, element1, element3, element4]  
+  
+// 앞쪽 요소 제거  
+String removedFirst = deque.removeFirst();  
+System.out.println("Removed from front: " + removedFirst); // Removed from front: element2  
+  
+// 뒷쪽 요소 제거  
+String removedLast = deque.removeLast();  
+System.out.println("Removed from back: " + removedLast); // Removed from back: element4  
+  
+System.out.println("Final Deque: " + deque); // [element1, element3]
+```
+### 활용
+팰린드롬이나 슬라이딩 윈도우처럼 양옆으로 늘줄늘줄하는 알고리즘에 사용될 수 있다.
+
+## 우선순위 큐(Priority Queue)
+우선순위 큐는 각 요소가 우선순위를 가진 자료구조이다. 요소들은 우선순위에 따라 정렬되며, 가장 높은 우선순위를 가진 요소가 가장 먼저 꺼내진다. 자바에서는 이를 최소 힙(min heap)으로 구현한다. 내부적으로는 트리의 종류인 힙으로 구성되어 있지만 인터페이스가 큐인 이유는, 규칙에 따라 나올 순서가 된 녀석이 차례대로 나오기 때문이다.
+
+### 조회
+- **peek()**: 우선순위가 가장 높은 요소를 조회한다. 시간 복잡도는 O(1)이다.
+
+### 삽입/삭제
+- **offer(element)**: 우선순위 큐에 요소를 삽입한다. 시간 복잡도는 O(log n)이다.
+- **poll()**: 우선순위가 가장 높은 요소를 제거하고 반환한다. 시간 복잡도는 O(log n)이다.
+우선순위 큐에서 삽입/삭제의 시간복잡도가 O(log n)인 이유는 우선순위 큐가 힙으로 구현되어있기 때문이다. 값이 추가되고 지워진 이후에는 내부 구조가 힙으로 유지되어야 하기 때문에 추가/삭제 후 힙 정렬을 수행해야 한다. 힙은 완전 이진 트리이므로 그 높이가 log n을 넘지 않으니 연산의 시간복잡도는 O(log n)이다.
+
+### 구현
+구현은 Queue 인터페이스에 PriorityQueue라는 구현체를 활용하여 사용이 가능하다. 이 구현체를 들여다보면 heap으로 구현되어 있다고 javadoc에 나와 있으며, 신기하게도 내부 element 관리는 동적 배열을 이용하여 구현되어 있다.
+```java
+Queue<Integer> priorityQueue = new PriorityQueue<>();  
+  
+// 요소를 큐에 추가  
+priorityQueue.offer(4);  
+priorityQueue.offer(2);  
+priorityQueue.offer(1);  
+priorityQueue.offer(3);  
+  
+System.out.println("Initial PriorityQueue: " + priorityQueue); // Initial PriorityQueue: [1, 3, 2, 4]  
+  
+// 가장 우선순위가 높은 요소 제거  
+Integer removedElement = priorityQueue.poll();  
+System.out.println("Removed Element: " + removedElement); // Removed Element: 1  
+  
+System.out.println("PriorityQueue after removal: " + priorityQueue); // PriorityQueue after removal: [2, 3, 4]
+```
+전능하신 chat GPT에게 우선순위 큐가 배열로 구현되어 있는 이유를 물어봤다.
+->
+자바에서 우선순위 큐(PriorityQueue)는 일반적으로 이진 힙(Binary Heap)을 기반으로 구현되어 있습니다. 이진 힙은 완전 이진 트리(Complete Binary Tree)의 일종으로서, 힙 속성을 만족하는 트리를 의미합니다. 힙 속성이란 모든 노드가 자식 노드보다 크거나(또는 작거나) 함을 의미합니다.
+
+이진 힙은 배열을 사용하여 효율적으로 구현할 수 있습니다. 배열의 인덱스를 이용하여 특정 노드의 부모 노드와 자식 노드를 쉽게 찾을 수 있기 때문입니다. 따라서, 자바의 PriorityQueue는 내부적으로 배열을 사용하여 이진 힙을 구현하고 있습니다.
+
+### 활용
+다익스트라 알고리즘이 가장 대표적으로 우선순위 큐를 사용하는 알고리즘이다.
+
 ## 스택(Stack)
+
+Queue처럼 나름의 규칙에 따라 element가 들어가고 나오는 Stack에 대하여 알아보자.
+
 ![](https://fullyunderstood.com/wp-content/uploads/2020/02/stack.gif)
 스택은 후입선출(LIFO; Last In First Out) 구조로 데이터를 처리하는 자료형이다. 이는 큐와 같이 가장 오래된 자료구조 중 하나로, 운영체제 시스템 구현에도 많이 사용된 자료구조이다.
 
@@ -262,84 +353,3 @@ public class StackExample {
 
 ### 활용
 스택은 프로그래밍이라는 개념이 등장했을 때부터 사용된 가장 고전적인 자료구조 중 하나로, '함수 호출 및 복귀', '재귀 호출', '지역변수, 매개변수 저장' 등에 대표적으로 사용된다. "나중에 들어간 게 먼저 나온다"라는 원리를 이용하여 대표적으로 스택을 사용하는 알고리즘은 DFS, 백트래킹이 있다. 두 개 모두 스택으로 관리가 가능하지만, 컴퓨터 내부적으로 재귀를 스택으로 관리하므로 우리는 사실 재귀 함수를 로직에 사용함으로써 대체하고 있다.
-
-## 덱(Deque)
-Deque(Double Ended Queue)는 이름에서 알 수 있듯이 양쪽 끝에서 삽입과 삭제가 모두 가능한 자료구조이다. 이로 인해 Stack과 Queue의 특성을 모두 가지고 있다. 따라서 위에서 Stack의 구현체로 ArrayDeque를 사용하는 걸 볼 수 있었다.
-
-### 조회
-- **peekFirst()**: Deque의 앞쪽 요소를 조회하는 연산으로, 시간 복잡도는 O(1)이다.
-- **peekLast()**: Deque의 뒷쪽 요소를 조회하는 연산으로, 시간 복잡도는 O(1)이다.
-
-### 삽입/삭제
-- **addFirst(element)**: Deque의 앞쪽에 요소를 삽입하며, 시간 복잡도는 O(1)이다.
-- **addLast(element)**: Deque의 뒷쪽에 요소를 삽입하며, 시간 복잡도는 O(1)이다.
-- **removeFirst()**: Deque의 앞쪽 요소를 제거하고 return한다. 시간 복잡도는 O(1)이다.
-- **removeLast()**: Deque의 뒷쪽 요소를 제거하고 return한다. 시간 복잡도는 O(1)이다.
-
-### 구현
-자바에서는 덱을 연결리스트로 구현해 두었다. Queue의 구현체가 연결리스트인데, Deque는 Queue를 상속하고 있는 구조라서 이는 자명하다고 할 수 있다. 물론 ArrayDeque를 사용해도 된다. 일단 예시에서는 LinkedList로 하겠다.
-
-```java
-Deque<String> deque = new LinkedList<>();  
-  
-// 요소를 앞쪽에 추가  
-deque.addFirst("element1");  
-deque.addFirst("element2");  
-  
-// 요소를 뒷쪽에 추가  
-deque.addLast("element3");  
-deque.addLast("element4");  
-  
-System.out.println("Initial Deque: " + deque); // Initial Deque: [element2, element1, element3, element4]  
-  
-// 앞쪽 요소 제거  
-String removedFirst = deque.removeFirst();  
-System.out.println("Removed from front: " + removedFirst); // Removed from front: element2  
-  
-// 뒷쪽 요소 제거  
-String removedLast = deque.removeLast();  
-System.out.println("Removed from back: " + removedLast); // Removed from back: element4  
-  
-System.out.println("Final Deque: " + deque); // [element1, element3]
-```
-### 활용
-팰린드롬이나 슬라이딩 윈도우처럼 양옆으로 늘줄늘줄하는 알고리즘에 사용될 수 있다.
-
-## 우선순위 큐(Priority Queue)
-우선순위 큐는 각 요소가 우선순위를 가진 자료구조이다. 요소들은 우선순위에 따라 정렬되며, 가장 높은 우선순위를 가진 요소가 가장 먼저 꺼내진다. 자바에서는 이를 최소 힙(min heap)으로 구현한다.
-
-### 조회
-- **peek()**: 우선순위가 가장 높은 요소를 조회한다. 시간 복잡도는 O(1)이다.
-
-### 삽입/삭제
-- **offer(element)**: 우선순위 큐에 요소를 삽입한다. 시간 복잡도는 O(log n)이다.
-- **poll()**: 우선순위가 가장 높은 요소를 제거하고 반환한다. 시간 복잡도는 O(log n)이다.
-우선순위 큐에서 삽입/삭제의 시간복잡도가 O(log n)인 이유는 우선순위 큐가 힙으로 구현되어있기 때문이다. 값이 추가되고 지워진 이후에는 내부 구조가 힙으로 유지되어야 하기 때문에 추가/삭제 후 힙 정렬을 수행해야 한다. 힙은 완전 이진 트리이므로 그 높이가 log n을 넘지 않으니 연산의 시간복잡도는 O(log n)이다.
-
-### 구현
-구현은 Queue 인터페이스에 PriorityQueue라는 구현체를 활용하여 사용이 가능하다. 이 구현체를 들여다보면 heap으로 구현되어 있다고 javadoc에 나와 있으며, 신기하게도 내부 element 관리는 동적 배열을 이용하여 구현되어 있다.
-```java
-Queue<Integer> priorityQueue = new PriorityQueue<>();  
-  
-// 요소를 큐에 추가  
-priorityQueue.offer(4);  
-priorityQueue.offer(2);  
-priorityQueue.offer(1);  
-priorityQueue.offer(3);  
-  
-System.out.println("Initial PriorityQueue: " + priorityQueue); // Initial PriorityQueue: [1, 3, 2, 4]  
-  
-// 가장 우선순위가 높은 요소 제거  
-Integer removedElement = priorityQueue.poll();  
-System.out.println("Removed Element: " + removedElement); // Removed Element: 1  
-  
-System.out.println("PriorityQueue after removal: " + priorityQueue); // PriorityQueue after removal: [2, 3, 4]
-```
-전능하신 chat GPT에게 우선순위 큐가 배열로 구현되어 있는 이유를 물어봤다.
-->
-자바에서 우선순위 큐(PriorityQueue)는 일반적으로 이진 힙(Binary Heap)을 기반으로 구현되어 있습니다. 이진 힙은 완전 이진 트리(Complete Binary Tree)의 일종으로서, 힙 속성을 만족하는 트리를 의미합니다. 힙 속성이란 모든 노드가 자식 노드보다 크거나(또는 작거나) 함을 의미합니다.
-
-이진 힙은 배열을 사용하여 효율적으로 구현할 수 있습니다. 배열의 인덱스를 이용하여 특정 노드의 부모 노드와 자식 노드를 쉽게 찾을 수 있기 때문입니다. 따라서, 자바의 PriorityQueue는 내부적으로 배열을 사용하여 이진 힙을 구현하고 있습니다.
-
-### 활용
-다익스트라 알고리즘이 가장 대표적으로 우선순위 큐를 사용하는 알고리즘이다.
