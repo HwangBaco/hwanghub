@@ -1,19 +1,3 @@
-- [x] 데이터베이스 기본
-- [x] 키 종류 / 특징 / 예시
-- [x] ERD & 정규화 과정
-- [x] JOIN
-- [x] SQL injection
-    - SQL injection 개념
-    - 공격 종류 및 방법
-        - Nomal SQL Injection
-        - Union based SQL Injection
-        - Blind SQL Injection - Boolean based SQL Injection
-        - Blind SQL Injection - Time based SQL Injection
-        - Stored Procedure SQL Injection
-        - Mass SQL Injection
-    - 대응 방안
-
-
 _메인 출처 : (도서) MySQL로 배우는 데이터베이스 개론과 실습_
 _참고 링크 : [medium.com](https://medium.com/@claire_logan/3-relational-data-model-examples-c9f70c61588c)_
 
@@ -162,9 +146,6 @@ ERD(Entity-Relationship Diagram)는 데이터 모델링을 할 때에 각 릴레
 
 주목할 점은, ERD를 작성함으로써 관계성에 영어로 코멘트를 달아줌으로써 각 테이블이 어떤 의미의 관계성을 갖고 유기적으로 연결되어 있는지를 정의할 수 있다는 겁니다. 이 과정을 통해 스키마 작성시 더욱 명확하게 데이터 구조를 이해할 수 있게 됩니다. 더욱 명료하게 이해할수록 스키마 구조화가 더 효율적이고 정확하겠죠. 따라서 ERD를 구성해보는 것은 복잡한 데이터베이스 설계를 위해서는 가장 단순하면서도 효과적인 논리적 모델링 방법이라고 할 수 있겠습니다.
 
-## 데이터베이스 스키마
-(추후 ERD 바탕 실습과 함께 추가 예정)
-
 ## 정규화
 
 데이터베이스는 두 가지 이상의 정보가 한 릴레이션에 저장되어 있을 때 이상현상이 발생한다. 따라서 이상현상을 방지하지 위해 릴레이션 내에 있는 중복 데이터를 분리하는 작업이 필요하고, 이를 "정규화(Normalization)"라고 한다.
@@ -232,29 +213,8 @@ STUD_NO            COURSE_NO          COURSE_NO                COURSE_FEE
 #### BCNF
 - R(A,B,C)가 있고, A, B가 key라고 할 때, A,B,를 보면 C라고 판단할 수 있고, C를 볼 때 B가 B라고 판단할 수 있으면 3NF이지만 BCNF가 아닌 경우이다. C → B가 안되어야 BCNF이다.
 - 예시를 보면, TEACH(student, course, instructor) 테이블이 있고, 그 함수 종속성이 FD1: {student, course} → Instructor, FD2 : Instructor → course라고 할 때 (Instructor, student), (Instructor, course)로 쪼개야 BCNF를 만족한다.
-## JOIN
-- EQUI join
-	- 등호 join
-	- 보통 join이라 하면 전부 이거
-	- 종류 : inner join, outer join, natural join
-- NON-EQUI join
-	- 부등호 join
-	- 잘 안씀
-- on과 where 차이
-	- on은 join 한정 조건 키워드 (join 전에 해당 조건 필터 걸고 join 수행)
-	- where은 전체 결과에 대한 조건 필터
-## 데이터베이스 쿼리 작성
 
-기본적으로 데이터베이스에 쿼리를 입력하는 전용 언어인 **SQL**이 있다. SQL로 구성하는 쿼리의 종류로는 다음 세 가지가 있습니다.
+## 마무리
+여기까지 Database에 대한 간단한 이해와, 설계 단계에서 고려해야 하는 KEY에 대한 지식, 그리고 ERD와 정규화에 대하여 이해해 봤습니다. 정규화는 과도하게 진행될 경우 JOIN연산을 너무 많이 수행해야 하므로 이상 현상만 피할 수 있게 적절히 하는 것이 중요합니다. 이를 고려하여 ERD를 잘 작성해서 DB를 모델링 한 뒤에 스키마를 제작하면 됩니다.
 
--   DDL (Data Definition Language); `CREATE`, `ALTER`, `DROP`, etc.
--   DML (Data Management Language); `SELECT`, `INSERT`, `DELETE`, `UPDATE`, etc.
--   DCL (Data Control Language); `GRANT`, `REVOKE`, etc.
-
-(SQL 내용 추가)
-
-## delete, truncate, drop 차이
-
-delete는 로그가 남아서 롤백이 된다.
-truncate는 아예 테이블을 생성하는 시점으로 초기화하는 거고, 롤백 불가
-drop은 아예 삭제되는 거.
+다음에는 DB 스키마를 한번 코드로 짜 보겠습니다. 감사합니다.
